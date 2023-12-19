@@ -15,7 +15,7 @@
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 4</button>
+                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 5</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
                 <p class="gray-label">Связь с ПУ: <strong><span id="bleState" style="color:#d13a30;">ОТКЛЮЧЕН</span></strong></p>
@@ -55,7 +55,7 @@
     //Define BLE Device Specs
     var deviceName ='Espressif';
     var bleService = '0000a002-0000-1000-8000-00805f9b34fb';
-    var ledCharacteristic = '0000c302-0000-1000-8000-00805f9b34fb';
+    var ledCharacteristic = '0000c303-0000-1000-8000-00805f9b34fb';
     var sensorCharacteristic= '0000c305-0000-1000-8000-00805f9b34fb';
 
     //Global Variables to Handle Bluetooth
@@ -74,8 +74,8 @@
     disconnectButton.addEventListener('click', disconnectDevice);
 
     // Write to the ESP32 LED Characteristic
-    onButton.addEventListener('click', () => writeOnCharacteristic(1));
-    offButton.addEventListener('click', () => writeOnCharacteristic(0));
+    onButton.addEventListener('click', () => writeOnCharacteristic(666));
+    offButton.addEventListener('click', () => writeOnCharacteristic(777));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
