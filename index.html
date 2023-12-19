@@ -74,8 +74,8 @@
     disconnectButton.addEventListener('click', disconnectDevice);
 
     // Write to the ESP32 LED Characteristic
-    onButton.addEventListener('click', () => writeOnCharacteristic(363636));
-    offButton.addEventListener('click', () => writeOnCharacteristic(373737));
+    onButton.addEventListener('click', () => writeOnCharacteristic(6));
+    offButton.addEventListener('click', () => writeOnCharacteristic(7));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
