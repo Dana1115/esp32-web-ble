@@ -15,7 +15,7 @@
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 9</button>
+                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 10</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
                 <p class="gray-label">Связь с ПУ: <strong><span id="bleState" style="color:#d13a30;">ОТКЛЮЧЕН</span></strong></p>
@@ -74,8 +74,8 @@
     disconnectButton.addEventListener('click', disconnectDevice);
 
     // Write to the ESP32 LED Characteristic
-    onButton.addEventListener('click', () => writeOnCharacteristic(6));
-    offButton.addEventListener('click', () => writeOnCharacteristic(7));
+    onButton.addEventListener('click', () => writeOnCharacteristic(666));
+    offButton.addEventListener('click', () => writeOnCharacteristic(777));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
