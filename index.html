@@ -74,8 +74,8 @@
     disconnectButton.addEventListener('click', disconnectDevice);
 
     // Write to the ESP32 LED Characteristic
-    onButton.addEventListener('click', () => writeOnCharacteristic(666));
-    offButton.addEventListener('click', () => writeOnCharacteristic(777));
+    onButton.addEventListener('click', () => writeOnCharacteristic(66));
+    offButton.addEventListener('click', () => writeOnCharacteristic(77));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
@@ -151,7 +151,7 @@
             bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint16Array([value]);
+                const data = new Uint8Array([value]);
                 return characteristic.writeValue(data);
             })
             .then(() => {
