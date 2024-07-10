@@ -15,7 +15,7 @@
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 11</button>
+                    <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
                 <p class="gray-label">Связь с ПУ: <strong><span id="bleState" style="color:#d13a30;">ОТКЛЮЧЕН</span></strong></p>
@@ -90,12 +90,29 @@
 
     // Connect to BLE Device and Enable Notifications
     function onWatchAdvertisementsButtonClick(){
-        console.log('Initializing Bluetooth...');
-        navigator.bluetooth.requestDevice({
-            filters: [{name: deviceName}],
-            optionalServices: [bleService]
-        })
-        .then(device => {
+       log('Requesting any Bluetooth device...');
+  navigator.bluetooth.requestDevice({
+// filters: [...] <- Prefer filters to save energy & show relevant devices.
+    acceptAllDevices: true
+  })
+   .then(device => {
+    log('> Requested ' + device.name);
+   device.addEventListener('advertisementreceived', (event) => {
+      log('Advertisement received.');
+      log('  MD: ' + event.event.manufacturerData);
+     /* log('  Device ID: ' + event.device.id);
+      log('  RSSI: ' + event.rssi);
+      log('  TX Power: ' + event.txPower);
+      log('  UUIDs: ' + event.uuids);
+      event.manufacturerData.forEach((valueDataView, key) => {
+        logDataView('Manufacturer', key, valueDataView);
+      });
+      event.serviceData.forEach((valueDataView, key) => {
+        logDataView('Service', key, valueDataView);
+      }); 
+      */
+    });
+     /* .then(device => {
             console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Подключено к ПУ ' + device.name;
             bleStateContainer.style.color = "#24af37";
@@ -126,9 +143,13 @@
             console.log("Decoded value: ", decodedValue);
             retrievedValue.innerHTML = decodedValue;            
         })
+               */
+       log('Watching advertisements from "' + device.name + '"...');
+    return device.watchAdvertisements();  
+  })
         .catch(error => {
             console.log('Error: ', error);
-        })
+        }) 
     }
 
     function onDisconnected(event){
