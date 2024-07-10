@@ -66,7 +66,7 @@
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
-            onWatchAdvertisementsButtonClick();
+            connectToDevice();
         }
     });
 
@@ -89,54 +89,18 @@
     }
 
     // Connect to BLE Device and Enable Notifications
-   // Connect Button (search for BLE Devices only if BLE is available)
-    connectButton.addEventListener('click', (event) => {
-        if (isWebBluetoothEnabled()){
-            onWatchAdvertisementsButtonClick();
-        }
-    });
-
-    // Disconnect Button
-    disconnectButton.addEventListener('click', disconnectDevice);
-
-    // Write to the ESP32 LED Characteristic
-    onButton.addEventListener('click', () => writeOnCharacteristic(1));
-    offButton.addEventListener('click', () => writeOnCharacteristic(0));
-
-    // Check if BLE is available in your Browser
-    function isWebBluetoothEnabled() {
-        if (!navigator.bluetooth) {
-            console.log('Web Bluetooth API is not available in this browser!');
-            bleStateContainer.innerHTML = "Web Bluetooth API is not available in this browser/device!";
-            return false
-        }
-        console.log('Web Bluetooth API supported in this browser.');
-        return true
-    }
-
-    // Connect to BLE Device and Enable Notifications
-    function onWatchAdvertisementsButtonClick(){
+    function connectToDevice(){
         console.log('Initializing Bluetooth...');
         navigator.bluetooth.requestDevice({
-           acceptAllDevices: true
-    //        optionalServices: [bleService]
+            filters: [{name: deviceName}],
+            optionalServices: [bleService]
         })
         .then(device => {
             console.log('Device Selected:', device.name);
-            bleStateContainer.innerHTML = 'Connected to device ' + device.name;
+            bleStateContainer.innerHTML = 'Подключено к ПУ ' + device.name;
             bleStateContainer.style.color = "#24af37";
-            device.addEventListener('advertisementreceived', (event) => {
-            log('  MD: ' + event.manufacturerData);
-            log('  Device ID: ' + event.device.id);
-      });
-    });
-
-    log('Watching advertisements from "' + device.name + '"...');
-    return device.watchAdvertisements();  
-  })
-  .catch(error => {
-    log('Argh! ' + error);
-  });
+            device.addEventListener('gattservicedisconnected', onDisconnected);
+            return device.gatt.connect();
         })
         .then(gattServer =>{
             bleServer = gattServer;
