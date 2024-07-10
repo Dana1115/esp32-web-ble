@@ -90,16 +90,16 @@
 
     // Connect to BLE Device and Enable Notifications
     function onWatchAdvertisementsButtonClick(){
-       log('Requesting any Bluetooth device...');
+       console.log('Requesting any Bluetooth device...');
   navigator.bluetooth.requestDevice({
 // filters: [...] <- Prefer filters to save energy & show relevant devices.
     acceptAllDevices: true
   })
    .then(device => {
-    log('> Requested ' + device.name);
+    console.log('> Requested ' + device.name);
    device.addEventListener('advertisementreceived', (event) => {
-      log('Advertisement received.');
-      log('  MD: ' + event.event.manufacturerData);
+      console.log('Advertisement received.');
+      console.log('  MD: ' + event.event.manufacturerData);
      /* log('  Device ID: ' + event.device.id);
       log('  RSSI: ' + event.rssi);
       log('  TX Power: ' + event.txPower);
@@ -144,7 +144,7 @@
             retrievedValue.innerHTML = decodedValue;            
         })
                */
-       log('Watching advertisements from "' + device.name + '"...');
+       console.log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
         .catch(error => {
