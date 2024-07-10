@@ -96,10 +96,10 @@
     acceptAllDevices: true
   })
    .then(device => {
-    console.log('> Requested ' + device.name);
+    log('> Requested ' + device.name);
    device.addEventListener('advertisementreceived', (event) => {
-      console.log('Advertisement received.');
-      console.log('  MD: ' + event.event.manufacturerData);
+      log('Advertisement received.');
+      log('  MD: ' + event.manufacturerData);
      /* log('  Device ID: ' + event.device.id);
       log('  RSSI: ' + event.rssi);
       log('  TX Power: ' + event.txPower);
