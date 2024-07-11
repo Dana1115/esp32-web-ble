@@ -84,23 +84,23 @@
             bleStateContainer.innerHTML = "Web Bluetooth API is not available in this browser/device!";
             return false
         }
-        log('Web Bluetooth API supported in this browser.');
+        console.log('Web Bluetooth API supported in this browser.');
         return true
     }
 
     // Connect to BLE Device and Enable Notifications
     function onWatchAdvertisementsButtonClick(){
-      log('Requesting any Bluetooth device...');
+       console.log('Requesting any Bluetooth device...');
   navigator.bluetooth.requestDevice({
 // filters: [...] <- Prefer filters to save energy & show relevant devices.
     acceptAllDevices: true
   })
    .then(device => {
-   log('> Requested ' + device.name);
+   console.log('> Requested ' + device.name);
    device.addEventListener('advertisementreceived', (event) => {
-     log('Advertisement received.');
-    log('  MD: ' + event.manufacturerData);
-     log('  Device ID: ' + event.device.id);
+     console.log('Advertisement received.');
+    console.log('  MD: ' + event.manufacturerData);
+      console.log('  Device ID: ' + event.device.id);
       /*
       log('  RSSI: ' + event.rssi);
       log('  TX Power: ' + event.txPower);
@@ -145,7 +145,7 @@
             retrievedValue.innerHTML = decodedValue;            
         })
                */
-       log('Watching advertisements from "' + device.name + '"...');
+        console.log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
         .catch(error => {
@@ -158,7 +158,7 @@
         bleStateContainer.innerHTML = "ПУ отключено";
         bleStateContainer.style.color = "#d13a30";
 
-        connectToDevice();
+        onWatchAdvertisementsButtonClick();
     }
 
     function handleCharacteristicChange(event){
