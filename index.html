@@ -15,6 +15,7 @@
         <div class="card-grid">
             <div class="card">
                 <p>
+                    <button id="scanBleButton" class="scanButton"> Скан к ВМ 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
@@ -23,11 +24,15 @@
         </div>
         <div class="card-grid">   
             <div class="card">
+                <h2>Показания ВМ</h2>
+                <p class="reading"><span id="value1Container">НЕТ ПОКАЗАНИЙ</span></p>
+                <p class="gray-label">Показания за: <span id="timestamp"></span></p>
+            </div>
+            <div class="card">
                 <h2>Показания ПУ</h2>
                 <p class="reading"><span id="valueContainer">НЕТ ПОКАЗАНИЙ</span></p>
                 <p class="gray-label">Показания за: <span id="timestamp"></span></p>
             </div>
-
             <div class="card">
                 <h2>Реле ПУ </h2>
                 <button id="onButton" class="onButton">ВКЛ</button>
@@ -43,10 +48,12 @@
 </body>
 <script>
     // DOM Elements
+    const scanButton = document.getElementById('scanBleButton');
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
+    const retrievedValue1 = document.getElementById('value1Container');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
@@ -63,10 +70,17 @@
     var bleServiceFound;
     var sensorCharacteristicFound;
 
+    // Scan Button (search for BLE Devices only if BLE is available)
+    scanButton.addEventListener('click', (event) => {
+        if (isWebBluetoothEnabled()){
+           onWatchAdvertisementsButtonClick();
+        }
+    });
+
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
-           onWatchAdvertisementsButtonClick();
+            connectToDevice();
         }
     });
 
@@ -88,7 +102,7 @@
         return true
     }
 
-    // Connect to BLE Device and Enable Notifications
+    // Scan BLE Device and Enable Notifications
     function onWatchAdvertisementsButtonClick(){
        console.log('Requesting any Bluetooth device...');
   navigator.bluetooth.requestDevice({
@@ -97,11 +111,10 @@
   })
    .then(device => {
    console.log('> Requested ' + device.name);
-       window.alert('ALERT!!!!');
-  /* device.addEventListener('advertisementreceived', (event) => {
-     console.log('Advertisement received.');
-    console.log('  MD: ' + event.manufacturerData);
-      console.log('  Device ID: ' + event.device.id);
+   device.addEventListener('advertisementreceived', (event) => {
+   console.log('Advertisement received.');
+   console.log('  MD: ' + event.manufacturerData);
+   console.log('  Device ID: ' + event.device.id);
      
       log('  RSSI: ' + event.rssi);
       log('  TX Power: ' + event.txPower);
@@ -114,7 +127,16 @@
       }); 
     
     });
-    */
+    console.log('Watching advertisements from "' + device.name + '"...');
+    return device.watchAdvertisements();  
+  })
+  // Connect to BLE Device and Enable Notifications
+    function connectToDevice(){
+        console.log('Initializing Bluetooth...');
+        navigator.bluetooth.requestDevice({
+            filters: [{name: deviceName}],
+            optionalServices: [bleService]
+        })    
       .then(device => {
             console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Подключено к ПУ ' + device.name;
