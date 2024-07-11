@@ -15,7 +15,7 @@
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <button id="scanBleButton" class="scanButton"> Скан к ВМ 01</button>
+                    <button id="scanBleButton" class="connectButton"> Скан к ВМ 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
@@ -115,8 +115,10 @@
    console.log('Advertisement received.');
    console.log('  MD: ' + event.manufacturerData);
    console.log('  Device ID: ' + event.device.id);
-     
-      log('  RSSI: ' + event.rssi);
+   const decodedValue = new TextDecoder().decode(event.manufacturerData);
+    console.log("Decoded value: ", decodedValue);
+    retrievedValue1.innerHTML = decodedValue;  
+     /* log('  RSSI: ' + event.rssi);
       log('  TX Power: ' + event.txPower);
       log('  UUIDs: ' + event.uuids);
       event.manufacturerData.forEach((valueDataView, key) => {
@@ -124,7 +126,8 @@
       });
       event.serviceData.forEach((valueDataView, key) => {
         logDataView('Service', key, valueDataView);
-      }); 
+      });
+      */
     
     });
     console.log('Watching advertisements from "' + device.name + '"...');
