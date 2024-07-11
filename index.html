@@ -172,11 +172,8 @@
             retrievedValue.innerHTML = decodedValue;            
         })
                
-        console.log('Watching advertisements from "' + device.name + '"...');
-    return device.watchAdvertisements();  
-  })
-        .catch(error => {
-           log('Error: ', error);
+          .catch(error => {
+           console.log('Error: ', error);
         }) 
     }
 
