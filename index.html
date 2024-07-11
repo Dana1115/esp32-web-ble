@@ -97,7 +97,7 @@
   })
    .then(device => {
    console.log('> Requested ' + device.name);
-   device.addEventListener('advertisementreceived', (event) => {
+  /* device.addEventListener('advertisementreceived', (event) => {
      console.log('Advertisement received.');
     console.log('  MD: ' + event.manufacturerData);
       console.log('  Device ID: ' + event.device.id);
@@ -113,6 +113,7 @@
       }); 
     
     });
+    */
       .then(device => {
             console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Подключено к ПУ ' + device.name;
