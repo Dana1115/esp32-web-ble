@@ -103,27 +103,30 @@
     }
 
     // Scan BLE Device and Enable Notifications
-    function onWatchAdvertisementsButtonClick(){
-       console.log('Requesting any Bluetooth device...');
-  navigator.bluetooth.requestDevice({
-// filters: [...] <- Prefer filters to save energy & show relevant devices.
-    acceptAllDevices: true
-  })
-   .then(device => {
-   console.log('> Requested ' + device.name);
-   device.addEventListener('advertisementreceived', (event) => {
-   console.log('Advertisement received.');
-   console.log('  MD: ' + event.manufacturerData);
-   console.log('  Device ID: ' + event.device.id);
-   const decodedValue = new TextDecoder().decode(event.manufacturerData);
-    console.log("Decoded value: ", decodedValue);
-    retrievedValue1.innerHTML = decodedValue;  
-       
+   function onWatchAdvertisementsButtonClick(){
+    console.log('Requesting any Bluetooth device...');
+    navigator.bluetooth.requestDevice({
+        acceptAllDevices: true
+    })
+    .then(device => {
+        console.log('> Requested ' + device.name);
+        device.addEventListener('advertisementreceived', (event) => {
+            console.log('Advertisement received.');
+            console.log('  MD: ' + event.manufacturerData);
+            console.log('  Device ID: ' + event.device.id);
+            
+            const decodedValue = new TextDecoder().decode(event.manufacturerData);
+            console.log("Decoded value: ", decodedValue);
+            document.getElementById('value1Container').innerHTML = decodedValue;
+        })    
+        
+        console.log('Watching advertisements from "' + device.name + '"...');
+        return device.watchAdvertisements();  
+    })
+    .catch(error => {
+        console.error('Error: ', error);
     });
-    console.log('Watching advertisements from "' + device.name + '"...');
-    return device.watchAdvertisements();  
-  })
-    }       
+}
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
