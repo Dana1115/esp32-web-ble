@@ -115,7 +115,7 @@
             console.log('  MD: ' + event.manufacturerData);
             console.log('  Device ID: ' + event.device.id);
             
-            const decodedValue = new TextDecoder().decode(event.device.id);
+            const decodedValue = new TextDecoder().decode(device.name);
             console.log("Decoded value: ", decodedValue);
             document.getElementById('value1Container').innerHTML = decodedValue;
         })    
