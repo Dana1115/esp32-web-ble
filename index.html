@@ -115,9 +115,10 @@
             console.log('  MD: ' + event.manufacturerData);
             console.log('  Device ID: ' + event.device.id);
             
-            const decodedValue = new TextDecoder().decode(event.manufacturerData);
-            console.log("Decoded value: ", decodedValue);
-            document.getElementById('value1Container').innerHTML = decodedValue;
+            const manufacturerData = new event.manufacturerData; // Замените на конкретные данные
+            const decodedData = decodeManufacturerData(manufacturerData);
+            console.log(decodedData);
+            document.getElementById('value1Container').innerHTML = value;
         })    
         
         console.log('Watching advertisements from "' + device.name + '"...');
@@ -234,6 +235,40 @@
             window.alert("Bluetooth is not connected.")
         }
     }
+    function decodeManufacturerData(manufacturerData) {
+  const dataView = new DataView(manufacturerData.buffer);
+
+  const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
+  const flags = dataView.getUint8(2);
+  const packetNumber = dataView.getUint8(3);
+  const internal1 = dataView.getUint8(4);
+  const packetVersion = dataView.getUint8(5);
+
+  const meterType = dataView.getInt8(6);
+  const meterKind = dataView.getInt8(7);
+
+  const SN = [dataView.getUint8(8), dataView.getUint8(9), dataView.getUint8(10)];
+  const value = dataView.getUint32(11, true) / 10;
+
+  const vBat = dataView.getInt8(15);
+  const temp = dataView.getInt16(16, true) / 100;
+  const prog_version = dataView.getUint8(18) / 10;
+
+  return {
+    MSD,
+    flags,
+    packetNumber,
+    internal1,
+    packetVersion,
+    meterType,
+    meterKind,
+    SN,
+    value,
+    vBat,
+    temp,
+    prog_version
+  };
+}
 
     function getDateTime() {
         var currentdate = new Date();
