@@ -118,7 +118,7 @@
            const manufacturerData = event.manufacturerData; // Замените на конкретные данные
             const decodedData = decodeManufacturerData(manufacturerData);
             console.log(decodedData);
-            document.getElementById('value1Container').innerHTML = value;
+            document.getElementById('value1Container').innerHTML = decodedData.value;
         })    
         
         console.log('Watching advertisements from "' + device.name + '"...');
