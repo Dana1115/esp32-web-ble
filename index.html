@@ -239,8 +239,10 @@
         }
     }
     function decodeManufacturerData(manufacturerData) {
-  const keys = Array.from(manufacturerData.keys());
-  const buffer = new ArrayBuffer(manufacturerData[keys[0]]);
+  const dataArray = Array.from(manufacturerData.values()); // Преобразуем значения в массив
+  const buffer = new ArrayBuffer(dataArray[0]); // Получаем первые данные из массива
+        const keys = Array.from(manufacturerData.keys());
+ // const buffer = new ArrayBuffer(manufacturerData[keys[0]]);
   const dataView = new DataView(buffer);
       
   const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
