@@ -239,7 +239,7 @@
         }
     }
     function decodeManufacturerData(manufacturerData) {
-   const buffer = new ArrayBuffer(manufacturerData);
+   const buffer = new ArrayBuffer(manufacturerData.get('manufacturerData'));
    const dataView = new DataView(buffer);
         
   const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
