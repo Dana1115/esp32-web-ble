@@ -115,7 +115,7 @@
             console.log('  MD: ' + event.manufacturerData);
             console.log('  Device ID: ' + event.device.id);
             
-            const manufacturerData = new event.manufacturerData; // Замените на конкретные данные
+            const manufacturerData = new manufacturerData; // Замените на конкретные данные
             const decodedData = decodeManufacturerData(manufacturerData);
             console.log(decodedData);
             document.getElementById('value1Container').innerHTML = value;
