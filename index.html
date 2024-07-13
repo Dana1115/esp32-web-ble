@@ -239,9 +239,10 @@
         }
     }
     function decodeManufacturerData(manufacturerData) {
-   const buffer = new ArrayBuffer(manufacturerData.get('manufacturerData'));
-   const dataView = new DataView(buffer);
-        
+  const keys = Array.from(manufacturerData.keys());
+  const buffer = new ArrayBuffer(manufacturerData[keys[0]]);
+  const dataView = new DataView(buffer);
+      
   const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
   const flags = dataView.getUint8(2);
   const packetNumber = dataView.getUint8(3);
@@ -273,7 +274,6 @@
     prog_version
   };
 }
-
     function getDateTime() {
         var currentdate = new Date();
         var day = ("00" + currentdate.getDate()).slice(-2); // Convert day to string and slice
