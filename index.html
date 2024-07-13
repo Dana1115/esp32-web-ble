@@ -116,6 +116,7 @@
             console.log('  Device ID: ' + event.device.id);
             
            const manufacturerData = new Uint8Array(event.manufacturerData.buffer);
+             console.log('  ARRAY: ' + manufacturerData);
             const decodedData = decodeManufacturerData(manufacturerData); // Замените на конкретные данные
            
             console.log(decodedData);
