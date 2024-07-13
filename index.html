@@ -236,7 +236,7 @@
         }
     }
     function decodeManufacturerData(manufacturerData) {
-  const dataView = new DataView(manufacturerData.buffer);
+  const dataView = new DataView(manufacturerData);
 
   const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
   const flags = dataView.getUint8(2);
