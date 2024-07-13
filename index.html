@@ -239,9 +239,9 @@
         }
     }
     function decodeManufacturerData(manufacturerData) {
-    const arrayBuffer = manufacturerData.buffer;
-    const dataView = new DataView(arrayBuffer);
-
+   const buffer = new ArrayBuffer(manufacturerData);
+   const dataView = new DataView(buffer);
+        
   const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
   const flags = dataView.getUint8(2);
   const packetNumber = dataView.getUint8(3);
