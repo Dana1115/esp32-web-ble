@@ -101,7 +101,13 @@
         console.log('Web Bluetooth API supported in this browser.');
         return true
     }
-
+function formatManufacturerDataMap(manufacturerDataMap) {
+    return Object.entries(manufacturerDataMap).map((([key,value])=>{
+        const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
+        const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
+        return `0x${companyIdentifier} 0x${data}`
+    }
+                                                    }                                                
     // Scan BLE Device and Enable Notifications
    function onWatchAdvertisementsButtonClick(){
     console.log('Requesting any Bluetooth device...');
@@ -119,7 +125,7 @@
               const manufacturerData = new Array(event.manufacturerData.buffer);
             const dataArray = Array.from(manufacturerData.values()); // Преобразуем значения в массив
   const buffer = new ArrayBuffer(dataArray[0]); // Получаем первые данные из массива
-             console.log('  ARRAY: ' + manufacturerData.values());
+             console.log('  ARRAY: ' + formatManufacturerDataMap(manufacturerDataMap));
             const decodedData = decodeManufacturerData(manufacturerData); // Замените на конкретные данные
            
             console.log(decodedData);
