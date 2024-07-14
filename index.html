@@ -103,8 +103,8 @@
     }
                                               
     // Scan BLE Device and Enable Notifications
-   function onWatchAdvertisementsButtonClick(){
-    console.log('Requesting any Bluetooth device...');
+   function onWatchAdvertisementsButtonClick() {  
+       console.log('Requesting any Bluetooth device...');
     navigator.bluetooth.requestDevice({
         acceptAllDevices: true
     })
@@ -126,17 +126,17 @@
     return device.watchAdvertisements();  
   })
            
-            console.log(decodedData);
-            document.getElementById('value1Container').innerHTML = decodedData.value;
-        })    
+         //   console.log(decodedData);
+         //   document.getElementById('value1Container').innerHTML = decodedData.value;
+      //  } 
         
         console.log('Watching advertisements from "' + device.name + '"...');
         return device.watchAdvertisements();  
-    })
+    }
     .catch(error => {
         console.error('Error: ', error);
     });
-}
+
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
