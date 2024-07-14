@@ -117,13 +117,21 @@
            event.manufacturerData.forEach((valueDataView, key) => {
         logDataView('Manufacturer', key, valueDataView);
       });
-         console.log(' dttt ' + event.manufacturerData((valueDataView, key)));
+        // console.log(' dttt ' + event.manufacturerData((valueDataView, key)));
       event.serviceData.forEach((valueDataView, key) => {
         logDataView('Service', key, valueDataView);
       });
            // console.log(' HEX1: ' + hexString);
     });
+function formatManufacturerDataMap(manufacturerDataMap) {
 
+    return Object.entries(manufacturerDataMap).map((([key,value])=>{
+
+        const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
+        const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
+        return `0x${companyIdentifier} 0x${data}`
+    }
+                                                    }
     console.log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
