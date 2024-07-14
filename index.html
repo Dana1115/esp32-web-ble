@@ -112,8 +112,8 @@
         console.log('> Requested ' + device.name);
         device.addEventListener('advertisementreceived', (event) => {
             console.log('Advertisement received.');
-            console.log('  MD: ' + event.manufacturerData);
-           // console.log('  Device ID: ' + event.device.id);
+           // console.log('Device ID: ' + event.device.id);
+           console.log('  Device ID: ' + event.device.id);
            event.manufacturerData.forEach((valueDataView, key) => {
         logDataView('Manufacturer', key, valueDataView);
       });
@@ -137,6 +137,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
   const hexString = [...new Uint8Array(valueDataView.buffer)].map(b => {
     return b.toString(16).padStart(2, '0');
   }).join(' ');
+    console.log(' HEX: ' + hexString);
   const textDecoder = new TextDecoder('ascii');
   const asciiString = textDecoder.decode(valueDataView.buffer);
   console.log(`  ${labelOfDataSource} Data: ` + key +
