@@ -130,8 +130,9 @@ function formatManufacturerDataMap(manufacturerDataMap) {
         return `0x${companyIdentifier} 0x${data}`
     }
     )).join(" | ")
-}
-    console.log('Watching advertisements from "' + device.name + '"...');
+};
+    console.log(companyIdentifier  +  data);
+        console.log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
     .catch(error => {
