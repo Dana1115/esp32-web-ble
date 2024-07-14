@@ -240,28 +240,26 @@
             window.alert("Bluetooth is not connected.")
         }
     }
-    function decodeManufacturerData(manufacturerData) {
-  const dataArray = Array.from(manufacturerData.values()); // Преобразуем значения в массив
-  const buffer = new ArrayBuffer(dataArray[0]); // Получаем первые данные из массива
-        const keys = Array.from(manufacturerData.keys());
- // const buffer = new ArrayBuffer(manufacturerData[keys[0]]);
+   function decodeManufacturerData(manufacturerData) {
+  const dataArray = Array.from(manufacturerData.values());
+  const buffer = new Uint8Array(dataArray).buffer;
   const dataView = new DataView(buffer);
-      
-  const MSD = [dataView.getUint8(0), dataView.getUint8(1)];
-  const flags = dataView.getUint8(2);
-  const packetNumber = dataView.getUint8(3);
-  const internal1 = dataView.getUint8(4);
-  const packetVersion = dataView.getUint8(5);
 
-  const meterType = dataView.getInt8(6);
-  const meterKind = dataView.getInt8(7);
+  const MSD = [dataView.getUint8(0).toString(16), dataView.getUint8(1).toString(16)];
+  const flags = dataView.getUint8(2).toString(16);
+  const packetNumber = dataView.getUint8(3).toString(16);
+  const internal1 = dataView.getUint8(4).toString(16);
+  const packetVersion = dataView.getUint8(5).toString(16);
 
-  const SN = [dataView.getUint8(8), dataView.getUint8(9), dataView.getUint8(10)];
-  const value = dataView.getUint32(11, true) / 10;
+  const meterType = dataView.getInt8(6).toString(16);
+  const meterKind = dataView.getInt8(7).toString(16);
 
-  const vBat = dataView.getInt8(15);
-  const temp = dataView.getInt16(16, true) / 100;
-  const prog_version = dataView.getUint8(18) / 10;
+  const SN = [dataView.getUint8(8).toString(16), dataView.getUint8(9).toString(16), dataView.getUint8(10).toString(16)];
+  const value = (dataView.getUint32(11, true) / 10).toString(16);
+
+  const vBat = dataView.getInt8(15).toString(16);
+  const temp = (dataView.getInt16(16, true) / 100).toString(16);
+  const prog_version = (dataView.getUint8(18) / 10).toString(16);
 
   return {
     MSD,
