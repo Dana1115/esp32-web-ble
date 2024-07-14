@@ -117,6 +117,8 @@
             
           //const manufacturerData = [ // структура данных для каждого элемента в массиве { MSD: [0x01, 0x02], flags: 0x00, packetNumber: 0x00, internal1: 0x00, packetVersion: 0x01, meterType: 1, meterKind: 1, SN: [0x01, 0x02, 0x03], value: 1000, vBat: 50, temp: 250, prog_version: 10 } ]; 
               const manufacturerData = new Array(event.manufacturerData.buffer);
+            const dataArray = Array.from(manufacturerData.values()); // Преобразуем значения в массив
+  const buffer = new ArrayBuffer(dataArray[0]); // Получаем первые данные из массива
              console.log('  ARRAY: ' + manufacturerData);
             const decodedData = decodeManufacturerData(manufacturerData); // Замените на конкретные данные
            
