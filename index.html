@@ -125,16 +125,27 @@
     log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
-           
+    .catch(error => {
+        console.error('Error: ', error);       
          //   console.log(decodedData);
          //   document.getElementById('value1Container').innerHTML = decodedData.value;
              
-        console.log('Watching advertisements from "' + device.name + '"...');
-        return device.watchAdvertisements();  
+     });   
     }
     .catch(error => {
         console.error('Error: ', error);
     });
+
+const logDataView = (labelOfDataSource, key, valueDataView) => {
+  const hexString = [...new Uint8Array(valueDataView.buffer)].map(b => {
+    return b.toString(16).padStart(2, '0');
+  }).join(' ');
+  const textDecoder = new TextDecoder('ascii');
+  const asciiString = textDecoder.decode(valueDataView.buffer);
+  console.log(`  ${labelOfDataSource} Data: ` + key +
+      '\n    (Hex) ' + hexString +
+      '\n    (ASCII) ' + asciiString);
+};
 
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
