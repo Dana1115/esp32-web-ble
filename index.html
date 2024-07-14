@@ -119,7 +119,7 @@
               const manufacturerData = new Array(event.manufacturerData.buffer);
             const dataArray = Array.from(manufacturerData.values()); // Преобразуем значения в массив
   const buffer = new ArrayBuffer(dataArray[0]); // Получаем первые данные из массива
-             console.log('  ARRAY: ' + buffer);
+             console.log('  ARRAY: ' + manufacturerData.values());
             const decodedData = decodeManufacturerData(manufacturerData); // Замените на конкретные данные
            
             console.log(decodedData);
