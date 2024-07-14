@@ -131,7 +131,7 @@ function formatManufacturerDataMap(manufacturerDataMap) {
         const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
         return `0x${companyIdentifier} 0x${data}`
     }
-                                                    }
+                                                    };
     console.log('Watching advertisements from "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
