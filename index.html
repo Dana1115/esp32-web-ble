@@ -117,9 +117,11 @@
            event.manufacturerData.forEach((valueDataView, key) => {
         logDataView('Manufacturer', key, valueDataView);
       });
+            console.log(' HEX2: ' + hexString);
       event.serviceData.forEach((valueDataView, key) => {
         logDataView('Service', key, valueDataView);
       });
+            console.log(' HEX1: ' + hexString);
     });
 
     console.log('Watching advertisements from "' + device.name + '"...');
