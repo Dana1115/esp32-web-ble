@@ -127,12 +127,13 @@ function formatManufacturerDataMap(manufacturerDataMap) {
     return Object.entries(manufacturerDataMap).map((([key,value])=>{
         const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
         const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
+        console.log(companyIdentifier  +  data);
         return `0x${companyIdentifier} 0x${data}`
     }
     )).join(" | ")
 };
-    console.log(companyIdentifier  +  data);
-        console.log('Watching advertisements from "' + device.name + '"...');
+   // console.log(companyIdentifier  +  data);
+        console.log('formatManufacturerDataMap "' + device.name + '"...');
     return device.watchAdvertisements();  
   })
     .catch(error => {
