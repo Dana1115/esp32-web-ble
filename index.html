@@ -115,13 +115,16 @@
             console.log('  MD: ' + event.manufacturerData);
            // console.log('  Device ID: ' + event.device.id);
            function formatManufacturerDataMap(manufacturerDataMap) {
-    return Object.entries(manufacturerDataMap).map((([key,value])=>{
-        const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
-        const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
-        return `0x${companyIdentifier} 0x${data}`
+    if (manufacturerDataMap) {
+        return Object.entries(manufacturerDataMap).map((([key, value]) => {
+            const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
+            const data = value.map((v => v.toString(16).padStart(2, "0"))).join("");
+            return `0x${companyIdentifier} 0x${data}`
+        })).join(" | ");
+    } else {
+        return "Manufacturer Data Map is undefined";
     }
-    )).join(" | ")
-};  
+};
        
           //const manufacturerData = [ // структура данных для каждого элемента в массиве { MSD: [0x01, 0x02], flags: 0x00, packetNumber: 0x00, internal1: 0x00, packetVersion: 0x01, meterType: 1, meterKind: 1, SN: [0x01, 0x02, 0x03], value: 1000, vBat: 50, temp: 250, prog_version: 10 } ]; 
               const manufacturerData = new Array(event.manufacturerData.buffer);
