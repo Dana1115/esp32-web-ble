@@ -114,11 +114,11 @@
             console.log('Advertisement received.');
            // console.log('Device ID: ' + event.device.id);
            console.log('  Device ID: ' + event.device.id);
-          console.log( event.manufacturerData.forEach((valueDataView, key) => {
+          console.log( event.manufacturerData((valueDataView, key) => {
         logDataView('Manufacturer', key, valueDataView);
       }));
         // console.log(' dttt ' + event.manufacturerData((valueDataView, key)));
-      console.log(event.serviceData.forEach((valueDataView, key) => {
+      console.log(event.serviceData((valueDataView, key) => {
         logDataView('Service', key, valueDataView);
       }));
            // console.log(' HEX1: ' + hexString);
