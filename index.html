@@ -114,15 +114,6 @@
             console.log('Advertisement received.');
            // console.log('Device ID: ' + event.device.id);
            console.log('  Device ID: ' + event.device.id);
-            function formatManufacturerDataMap(manufacturerDataMap) {
-    return Object.entries(manufacturerDataMap).map((([key,value])=>{
-        const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
-        const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
-        console.log(companyIdentifier  +  data);
-        return `0x${companyIdentifier} 0x${data}`
-    }
-    )).join(" | ")
-};
            event.manufacturerData((valueDataView, key) => {
         logDataView('Manufacturer', key, valueDataView);
       });
@@ -136,7 +127,16 @@ console.log(event.serviceData);
     });
    // console.log(companyIdentifier  +  data);
         console.log('formatManufacturerDataMap "' + device.name + '"...');
-    return device.watchAdvertisements();  
+    return device.watchAdvertisements(); 
+function formatManufacturerDataMap(manufacturerDataMap) {
+    return Object.entries(manufacturerDataMap).map((([key,value])=>{
+        const companyIdentifier = parseInt(key).toString(16).padStart(4, "0");
+        const data = value.map((v=>v.toString(16).padStart(2, "0"))).join("");
+        console.log(companyIdentifier  +  data);
+        return `0x${companyIdentifier} 0x${data}`
+    }
+    )).join(" | ")
+}; 
   })
     .catch(error => {
         console.error('Error: ', error);       
