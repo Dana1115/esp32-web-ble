@@ -50,6 +50,8 @@
 </body>
 <script>
     // DOM Elements
+    const companyIdentifier = document.getElementById('companyIdentifier');
+    const deviceName = document.getElementById('deviceName');
     const scanButton = document.getElementById('scanBleButton');
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
@@ -62,7 +64,6 @@
     const timestampContainer = document.getElementById('timestamp');
 
     //Define BLE Device Specs
-    var deviceName ='StarBR16120000007';
     var bleService = '0000a002-0000-1000-8000-00805f9b34fb';
     var ledCharacteristic = '0000c302-0000-1000-8000-00805f9b34fb';
     var sensorCharacteristic= '0000c305-0000-1000-8000-00805f9b34fb';
