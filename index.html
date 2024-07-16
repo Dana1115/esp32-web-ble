@@ -16,7 +16,7 @@
             <div class="card">
                 <p>
                     <input id="companyIdentifier" type="text" size=17 placeholder="Company Identifier">
-                    <input id="dataPrefix" type="text" size=17 placeholder="deviceName">    
+                    <input id="deviceName" type="text" size=17 placeholder="Device Name">    
                     <button id="scanBleButton" class="connectButton"> Скан к ВМ 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
@@ -71,7 +71,8 @@
     var bleServer;
     var bleServiceFound;
     var sensorCharacteristicFound;
-
+    // Input filter var condition
+    
     // Scan Button (search for BLE Devices only if BLE is available)
     scanButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
