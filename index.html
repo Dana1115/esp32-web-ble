@@ -111,7 +111,9 @@
    function onWatchAdvertisementsButtonClick() {  
        console.log('Requesting any Bluetooth device...');
     navigator.bluetooth.requestDevice({
-        acceptAllDevices: true
+        //acceptAllDevices: true
+         filters: [{name: deviceName}],
+         optionalServices: [bleService]
     })
     .then(device => {
         console.log('> Requested ' + device.name);
