@@ -15,7 +15,6 @@
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <input id="companyIdentifier" type="text" size=17 placeholder="Company Identifier">
                     <input id="deviceName" type="text" size=17 placeholder="Device Name">    
                     <button id="scanBleButton" class="connectButton"> Скан к ВМ 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
@@ -62,9 +61,10 @@
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
-    console.log('  deviceName: ' + deviceName );
+    
     
     //Define BLE Device Specs
+    
     var bleService = '0000a002-0000-1000-8000-00805f9b34fb';
     var ledCharacteristic = '0000c302-0000-1000-8000-00805f9b34fb';
     var sensorCharacteristic= '0000c305-0000-1000-8000-00805f9b34fb';
