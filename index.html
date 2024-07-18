@@ -50,7 +50,7 @@
 <script>
     // DOM Elements
     const companyIdentifier = document.getElementById('companyIdentifier');
-   // const deviceName = document.getElementById('deviceName');
+   const deviceNameInput = document.getElementById('deviceName');
     const scanButton = document.getElementById('scanBleButton');
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
@@ -78,7 +78,7 @@
 */
     
     //Define BLE Device Specs
-    var deviceName = document.getElementById('deviceName');
+   // var deviceName = document.getElementById('deviceName');
     var bleService = '0000a002-0000-1000-8000-00805f9b34fb';
     var ledCharacteristic = '0000c302-0000-1000-8000-00805f9b34fb';
     var sensorCharacteristic= '0000c305-0000-1000-8000-00805f9b34fb';
@@ -182,7 +182,13 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
-        //console.log('Device Selected:', filters);
+       connectButton.addEventListener('click', () => {
+    const deviceName = deviceNameInput.value;
+    if (deviceName) {
+        const filters = [{name: deviceName}];
+        // Далее продолжите вашу логику подключения к устройству с использованием фильтра `deviceName`
+    }
+});
         navigator.bluetooth.requestDevice({
             filters: [{name: deviceName}],
             optionalServices: [bleService]
