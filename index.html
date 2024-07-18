@@ -180,7 +180,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
-        console.log('Device Selected:', deviceName);
+        console.log('Device Selected:', filters);
         navigator.bluetooth.requestDevice({
             filters: [{name: deviceName}],
             optionalServices: [bleService]
