@@ -85,7 +85,8 @@
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
-            connectToDevice();
+           const deviceName = deviceNameInput.value;
+           connectToDevice();
         }
     });
 
