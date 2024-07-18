@@ -61,7 +61,19 @@
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
-    
+    scanButton.addEventListener('click', () => {
+        const deviceName = deviceNameInput.value;
+        if (deviceName) {
+            filters: [{name: deviceName}],
+        }
+    });
+
+    connectButton.addEventListener('click', () => {
+        const deviceName = deviceNameInput.value;
+        if (deviceName) {
+            filters: [{name: deviceName}],
+        }
+    });
     
     //Define BLE Device Specs
     // var deviceName = const deviceName = document.getElementById('deviceName');
