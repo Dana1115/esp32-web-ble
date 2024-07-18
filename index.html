@@ -170,9 +170,9 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
        connectButton.addEventListener('click', () => {
-    // const deviceName = deviceNameInput.value;
+    const deviceName = deviceNameInput.value;
     if (deviceName) {
-        filters = 'deviceName' ;
+       // filters = 'deviceName' ;
         console.log('filter...', filters );
         // Далее продолжите вашу логику подключения к устройству с использованием фильтра `deviceName`
     }
