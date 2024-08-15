@@ -173,10 +173,11 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
    // const deviceName = deviceNameInput.value;
     if (deviceName) {
        // filters = 'deviceName' ;
-        console.log('filter...', filters );
+        // console.log('filter...', filters );
         // Далее продолжите вашу логику подключения к устройству с использованием фильтра `deviceName`
     }
 });
+        console.log('filter...', filters );
         navigator.bluetooth.requestDevice({
             filters: [{name: deviceName}],
             optionalServices: [bleService]
@@ -226,12 +227,24 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         onWatchAdvertisementsButtonClick();
     }
 
-    function handleCharacteristicChange(event){
-        const newValueReceived = new TextDecoder().decode(event.target.value);
-        console.log("Characteristic value changed: ", newValueReceived);
-        retrievedValue.innerHTML = newValueReceived;
-        timestampContainer.innerHTML = getDateTime();
-    }
+   function handleCharacteristicChange(event) {
+    const newValueReceived = new TextDecoder().decode(event.target.value);
+    console.log("Characteristic value changed: ", newValueReceived);
+    
+    // Разделяем строку по разделителю ';'
+    const parts = newValueReceived.split(';');
+    
+    // Извлекаем значения до и после разделителя
+    const newValueReceived0 = parts[0].trim(); // Значение до разделителя
+    const newValueReceived1 = parts[1] ? parts[1].trim() : ''; // Значение после разделителя, если оно существует
+
+    console.log("Value before separator: ", newValueReceived0);
+    console.log("Value after separator: ", newValueReceived1);
+
+    retrievedValue.innerHTML = newValueReceived0; // Используем значение до разделителя для отображения
+    timestampContainer.innerHTML = getDateTime();
+}
+
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
