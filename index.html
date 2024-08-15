@@ -177,7 +177,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         // Далее продолжите вашу логику подключения к устройству с использованием фильтра `deviceName`
     }
 });
-        console.log('filter...', filters );
+        // console.log('filter...', filters );
         navigator.bluetooth.requestDevice({
             filters: [{name: deviceName}],
             optionalServices: [bleService]
