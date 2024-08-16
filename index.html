@@ -32,7 +32,7 @@
             <div class="card">
                 <h2>Показания ПУ</h2>
                 <p class="reading"><span id="valueContainer">НЕТ ПОКАЗАНИЙ</span></p>
-                <p class="gray-label">Показания за: <span id="timestamp"></span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
             </div>
             <div class="card">
                 <h2>Реле ПУ </h2>
@@ -61,7 +61,7 @@
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
-    
+    const timestampContainer1 = document.getElementById('timestamp1');
      
     //Define BLE Device Specs
     var deviceName = 'StarBR36120000013';
@@ -244,6 +244,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
     retrievedValue.innerHTML = newValueReceived0; // Используем значение до разделителя для отображения
     retrievedValue1.innerHTML = newValueReceived1; // Используем значение до разделителя для отображения   
     timestampContainer.innerHTML = getDateTime();
+    timestampContainer1.innerHTML = getDateTime();
 }
 
 
