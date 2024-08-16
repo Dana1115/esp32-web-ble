@@ -16,7 +16,7 @@
             <div class="card">
                 <p>
                     <input id="deviceName" type="text" size=17 placeholder="Device Name">    
-                    <button id="scanBleButton" class="connectButton"> Скан к ВМ 01</button>
+                    <button id="scanBleButton" class="connectButton"> Скан Водометр 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
@@ -25,7 +25,7 @@
         </div>
         <div class="card-grid">   
             <div class="card">
-                <h2>Показания ВМ</h2>
+                <h2>Показания ВодоМетр</h2>
                 <p class="reading"><span id="value1Container">НЕТ ПОКАЗАНИЙ</span></p>
                 <p class="gray-label">Показания за: <span id="timestamp"></span></p>
             </div>
@@ -340,7 +340,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         var minutes = ("00" + currentdate.getMinutes()).slice(-2);
         var seconds = ("00" + currentdate.getSeconds()).slice(-2);
         
-        var datetime = day + "/" + month + "/" + year + " at " + hours + ":" + minutes + ":" + seconds;
+        var datetime = day + "/" + month + "/" + year + " в " + hours + ":" + minutes + ":" + seconds;
         return datetime;
     }
 
