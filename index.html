@@ -231,36 +231,82 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
     const newValueReceived = new TextDecoder().decode(event.target.value);
     console.log("Characteristic value changed: ", newValueReceived);
 
-    // Разделяем строку по символам ';' и ',' и сохраняем результат в массив
-    const values = newValueReceived.split(';').flatMap(part => part.split(','));
+    // Разбиваем строку по ';' для получения сегментов данных
+    const segments = newValueReceived.split(';');
 
-    // Проверяем, что у нас есть хотя бы 8 значений
-    if (values.length >= 8) {
-        // Присваиваем значения переменным
-        const newValueReceived0 = values[0];
-        const newValueReceived1 = values[1];
-        const newValueReceived2 = values[2];
-        const newValueReceived3 = values[3];
-        const newValueReceived4 = values[4];
-        const newValueReceived5 = values[5];
-        const newValueReceived6 = values[6];
-        const newValueReceived7 = values[7];
+    // Создаем массив для хранения значений
+    const newValueReceivedArray = [];
 
-        // Форматируем значения newValueReceived0 - newValueReceived2
-        const formattedValue0 = parseFloat(newValueReceived0).toFixed(3);
-        const formattedValue1 = parseFloat(newValueReceived1).toFixed(3);
-        const formattedValue2 = parseFloat(newValueReceived2).toFixed(3);
+    // Проходим по каждому сегменту
+    segments.forEach((segment, index) => {
+        // Разбиваем сегмент по ',' для получения отдельных значений
+        const values = segment.split(',');
 
-        // Пример вывода или работы с отформатированными значениями
-        console.log(`Formatted Values: (${formattedValue0}, ${formattedValue1}, ${formattedValue2})`);
+        // Форматируем значения и добавляем в результирующий массив
+        values.forEach((value, valueIndex) => {
+            // Форматируем значения newValueReceived0 - newValueReceived2
+            if (index === 0 && valueIndex <= 2) {
+                newValueReceivedArray.push(parseFloat(value).toFixed(1)); // 1 знак после запятой
+            } else {
+                newValueReceivedArray.push(value); // Остальные значения без форматирования
+            }
+        });
+    });
 
-        // Выводим данные
-        retrievedValue.innerHTML = `Values: ${newValueReceived0}, ${newValueReceived1}, ${newValueReceived2}, ${newValueReceived3}, ${newValueReceived4}, ${newValueReceived5}, ${newValueReceived6}, ${newValueReceived7}`;
-        timestampContainer.innerHTML = getDateTime();
-    } else {
-        console.error("Недостаточно данных для обработки");
-    }
+    // Теперь у нас есть массив newValueReceivedArray с 8 значениями
+    // Можно получить каждое значение, например:
+    const [newValueReceived0, newValueReceived1, newValueReceived2, newValueReceived3, newValueReceived4, newValueReceived5, newValueReceived6, newValueReceived7] = newValueReceivedArray;
+
+    // Выводим отформатированные значения в контейнеры
+    retrievedValue.innerHTML = `
+        Value 0: ${newValueReceived0}<br>
+        Value 1: ${newValueReceived1}<br>
+        Value 2: ${newValueReceived2}<br>
+        Value 3: ${newValueReceived3}<br>
+        Value 4: ${newValueReceived4}<br>
+        Value 5: ${newValueReceived5}<br>
+        Value 6: ${newValueReceived6}<br>
+        Value 7: ${newValueReceived7}
+    `;
+
+    // Обновляем временную метку
+    timestampContainer.innerHTML = getDateTime();
 }
+
+   
+   
+
+   
+   
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+   
+   
+   
+   
+
+   
+   
+
+   
+   
+       
+  
+  
+  
+
+
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
