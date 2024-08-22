@@ -227,20 +227,25 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         onWatchAdvertisementsButtonClick();
     }
 
-   function handleCharacteristicChange(event) {
+    function handleCharacteristicChange(event) {
     const newValueReceived = new TextDecoder().decode(event.target.value);
     console.log("Characteristic value changed: ", newValueReceived);
-    
-    // Разделяем строку по разделителю ';'
-    const parts = newValueReceived.split(';');
-    
-    // Извлекаем значения до и после разделителя
-    const newValueReceived0 = parts[0].trim(); // Значение до разделителя
-    const newValueReceived1 = parts[1] ? parts[1].trim() : ''; // Значение после разделителя, если оно существует
 
-    console.log("Value before separator: ", newValueReceived0);
-    console.log("Value after separator: ", newValueReceived1);
+    // Разделяем строку на части с учетом обеих разделительных строк
+    const values = newValueReceived.split(/[,;]/);
 
+    // Поскольку ожидается 8 значений, создаем переменные
+    let newValueReceived1 = values[0] || null;
+    let newValueReceived2 = values[1] || null;
+    let newValueReceived3 = values[2] || null;
+    let newValueReceived4 = values[3] || null;
+    let newValueReceived5 = values[4] || null;
+    let newValueReceived6 = values[5] || null;
+    let newValueReceived7 = values[6] || null;
+    let newValueReceived8 = values[7] || null;
+
+    // Выводим значения в консоль для проверки
+    console.log("Received values: ", newValueReceived1, newValueReceived2, newValueReceived3, newValueReceived4, newValueReceived5, newValueReceived6, newValueReceived7, newValueReceived8);
     retrievedValue.innerHTML = newValueReceived0; // Используем значение до разделителя для отображения
     retrievedValue1.innerHTML = newValueReceived1; // Используем значение до разделителя для отображения   
     timestampContainer.innerHTML = getDateTime();
