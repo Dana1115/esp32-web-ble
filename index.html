@@ -226,46 +226,37 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
 
         onWatchAdvertisementsButtonClick();
     }
-
     function handleCharacteristicChange(event) {
     const newValueReceived = new TextDecoder().decode(event.target.value);
     console.log("Characteristic value changed: ", newValueReceived);
 
-    // Разделяем строку по символам ';' и ',' и сохраняем результат в массив
-    const values = newValueReceived.split(';').flatMap(part => part.split(','));
+    // Разделение строки на массив переменных, используя разделитель ';' для начала
+    const parts = newValueReceived.split(';');
+
+    // Предполагается, что у нас может быть 8 значений, мы разбиваем каждый элемент массива по ','
+    const values = parts.map(part => part.split(',')).flat();
 
     // Проверяем, что у нас есть хотя бы 8 значений
     if (values.length >= 8) {
-        // Присваиваем значения переменным
-        const newValueReceived0 = values[0];
-        const newValueReceived1 = values[1];
-        const newValueReceived2 = values[2];
-        const newValueReceived3 = values[3];
-        const newValueReceived4 = values[4];
-        const newValueReceived5 = values[5];
-        const newValueReceived6 = values[6];
-        const newValueReceived7 = values[7];
+        const [newValueReceived0, newValueReceived1, newValueReceived2,
+                newValueReceived3, newValueReceived4, newValueReceived5,
+                newValueReceived6, newValueReceived7] = values;
 
-        // Форматируем значения newValueReceived0 - newValueReceived2
+        // Форматируем первые 3 переменные
         const formattedValue0 = parseFloat(newValueReceived0).toFixed(1);
         const formattedValue1 = parseFloat(newValueReceived1).toFixed(1);
         const formattedValue2 = parseFloat(newValueReceived2).toFixed(1);
 
-        // Пример вывода или работы с отформатированными значениями
-        console.log(`Formatted Values: (${formattedValue0}, ${formattedValue1}, ${formattedValue2})`);
+        // Выводим отформатированные значения в консоль
+        console.log("Formatted values:", formattedValue0, formattedValue1, formattedValue2);
 
-        // Выводим данные
-        // retrievedValue.innerHTML = $formattedValue0;
-        retrieved1Value.innerHTML = newValueReceived7;
+        // Обновляем HTML элементы с полученными значениями (если необходимо)
+        retrievedValue.innerHTML = `Value0: ${formattedValue0}, Value1: ${formattedValue1}, Value2: ${formattedValue2}, ...`;
         timestampContainer.innerHTML = getDateTime();
     } else {
-        console.error("Недостаточно данных для обработки");
+        console.warn("Not enough values received.");
     }
 }
-  
-  
-
-
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
