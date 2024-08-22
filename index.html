@@ -251,7 +251,8 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         console.log("Formatted values:", formattedValue0, formattedValue1, formattedValue2);
 
         // Обновляем HTML элементы с полученными значениями (если необходимо)
-        retrievedValue.innerHTML = `Value0: ${formattedValue0}, Value1: ${formattedValue1}, Value2: ${formattedValue2}, ...`;
+        retrievedValue.innerHTML = `Value0: ${formattedValue0} ...`;
+        retrievedValue1.innerHTML = newValueReceived7;
         timestampContainer.innerHTML = getDateTime();
     } else {
         console.warn("Not enough values received.");
