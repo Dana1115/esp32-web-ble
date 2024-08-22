@@ -231,27 +231,36 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
     const newValueReceived = new TextDecoder().decode(event.target.value);
     console.log("Characteristic value changed: ", newValueReceived);
 
-    // Разделяем строку на части с учетом обеих разделительных строк
-    const values = newValueReceived.split(/[,;]/);
+    // Разделяем строку по символам ';' и ',' и сохраняем результат в массив
+    const values = newValueReceived.split(';').flatMap(part => part.split(','));
 
-    // Поскольку ожидается 8 значений, создаем переменные
-    const newValueReceived0 = values[0] || null;
-    const newValueReceived1 = values[1] || null;
-    let newValueReceived2 = values[2] || null;
-    let newValueReceived3 = values[3] || null;
-    let newValueReceived4 = values[4] || null;
-    let newValueReceived5 = values[5] || null;
-    let newValueReceived6 = values[6] || null;
-    let newValueReceived7 = values[7] || null;
+    // Проверяем, что у нас есть хотя бы 8 значений
+    if (values.length >= 8) {
+        // Присваиваем значения переменным
+        const newValueReceived0 = values[0];
+        const newValueReceived1 = values[1];
+        const newValueReceived2 = values[2];
+        const newValueReceived3 = values[3];
+        const newValueReceived4 = values[4];
+        const newValueReceived5 = values[5];
+        const newValueReceived6 = values[6];
+        const newValueReceived7 = values[7];
 
-    // Выводим значения в консоль для проверки
-    console.log("Received values: ", newValueReceived1, newValueReceived2, newValueReceived3, newValueReceived4, newValueReceived5, newValueReceived6, newValueReceived7, newValueReceived0);
-    retrievedValue.innerHTML = newValueReceived0; // Используем значение до разделителя для отображения
-    retrievedValue1.innerHTML = newValueReceived1; // Используем значение до разделителя для отображения   
-    timestampContainer.innerHTML = getDateTime();
-    timestampContainer1.innerHTML = getDateTime();
+        // Форматируем значения newValueReceived0 - newValueReceived2
+        const formattedValue0 = parseFloat(newValueReceived0).toFixed(3);
+        const formattedValue1 = parseFloat(newValueReceived1).toFixed(3);
+        const formattedValue2 = parseFloat(newValueReceived2).toFixed(3);
+
+        // Пример вывода или работы с отформатированными значениями
+        console.log(`Formatted Values: (${formattedValue0}, ${formattedValue1}, ${formattedValue2})`);
+
+        // Выводим данные
+        retrievedValue.innerHTML = `Values: ${newValueReceived0}, ${newValueReceived1}, ${newValueReceived2}, ${newValueReceived3}, ${newValueReceived4}, ${newValueReceived5}, ${newValueReceived6}, ${newValueReceived7}`;
+        timestampContainer.innerHTML = getDateTime();
+    } else {
+        console.error("Недостаточно данных для обработки");
+    }
 }
-
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
