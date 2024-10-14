@@ -251,7 +251,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         console.log("Formatted values:", formattedValue0, formattedValue1, formattedValue7);
 
         // Обновляем HTML элементы с полученными значениями (если необходимо)
-        retrievedValue.innerHTML = `${formattedValue0}`;
+        retrievedValue.innerHTML = `${formattedValue0} V`;
         retrievedValue1.innerHTML = `${formattedValue7} м`;
         timestampContainer.innerHTML = getDateTime();
     } else {
