@@ -245,14 +245,14 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         // Форматируем первые 3 переменные
         const formattedValue0 = (parseFloat(newValueReceived0) / 10).toString().toLowerCase();
         const formattedValue1 = parseFloat(newValueReceived1).toFixed(1);
-        const formattedValue2 = parseFloat(newValueReceived2).toFixed(1);
+        const formattedValue7 = (parseFloat(newValueReceived7) / 10000).toString().toLowerCase();
 
         // Выводим отформатированные значения в консоль
         console.log("Formatted values:", formattedValue0, formattedValue1, formattedValue2);
 
         // Обновляем HTML элементы с полученными значениями (если необходимо)
-        retrievedValue.innerHTML = `${formattedValue0}`;
-        retrievedValue1.innerHTML = newValueReceived7;
+        retrievedValue.innerHTML = `${formattedValue0} V`;
+        retrievedValue1.innerHTML = `${formattedValue0} м`;
         timestampContainer.innerHTML = getDateTime();
     } else {
         console.warn("Not enough values received.");
