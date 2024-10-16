@@ -35,6 +35,16 @@
                 <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
             </div>
             <div class="card">
+                <h2>Показания ПУ</h2>
+                <p class="reading"><span id="value2Container">НЕТ ПОКАЗАНИЙ</span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
+            </div>
+            <div class="card">
+                <h2>Показания ПУ</h2>
+                <p class="reading"><span id="value3Container">НЕТ ПОКАЗАНИЙ</span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
+            </div>
+            <div class="card">
                 <h2>Реле ПУ </h2>
                 <button id="onButton" class="onButton">ВКЛ</button>
                 <button id="offButton" class="offButton">ОТКЛ</button>
@@ -56,6 +66,8 @@
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
+    const retrievedValue3 = document.getElementById('value3Container');
+    const retrievedValue2 = document.getElementById('value2Container');
     const retrievedValue1 = document.getElementById('value1Container');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
@@ -244,7 +256,8 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
 
         // Форматируем первые 3 переменные
         const formattedValue0 = (parseFloat(newValueReceived0) / 10).toString().toLowerCase();
-        const formattedValue1 = parseFloat(newValueReceived1).toFixed(1);
+        const formattedValue3 = (parseFloat(newValueReceived3) / 10).toString().toLowerCase();
+        const formattedValue6 = (parseFloat(newValueReceived6) / 1000).toString().toLowerCase();
         const formattedValue7 = (parseFloat(newValueReceived7) / 10000).toString().toLowerCase();
 
         // Выводим отформатированные значения в консоль
@@ -252,6 +265,8 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
 
         // Обновляем HTML элементы с полученными значениями (если необходимо)
         retrievedValue.innerHTML = `${formattedValue0} V`;
+        retrievedValue2.innerHTML = `${formattedValue3} A`;
+        retrievedValue3.innerHTML = `${formattedValue6} W`;
         retrievedValue1.innerHTML = `${formattedValue7} м`;
         timestampContainer.innerHTML = getDateTime();
     } else {
