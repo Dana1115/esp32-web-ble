@@ -9,13 +9,14 @@
 </head>
 <body>
     <div class="topnav">
-        <h1>ПОКАЗЫВАЛКА ПУ РОТЕК</h1>
+        <h1>ДЕМО ПУ РОТЕК</h1>
     </div>
     <div class="content">
         <div class="card-grid">
             <div class="card">
                 <p>
-                    <button id="scanBleButton" class="connectButton"> Скан к ВМ 01</button>
+                    <input id="deviceName" type="text" size=17 placeholder="Device Name">    
+                    <button id="scanBleButton" class="connectButton"> Скан Водометр 01</button>
                     <button id="connectBleButton" class="connectButton"> Подключить к ПУ 12</button>
                     <button id="disconnectBleButton" class="disconnectButton"> Отключиться от ПУ</button>
                 </p>
@@ -24,14 +25,24 @@
         </div>
         <div class="card-grid">   
             <div class="card">
-                <h2>Показания ВМ</h2>
+                <h2>Показания ВодоМетр</h2>
                 <p class="reading"><span id="value1Container">НЕТ ПОКАЗАНИЙ</span></p>
                 <p class="gray-label">Показания за: <span id="timestamp"></span></p>
             </div>
             <div class="card">
                 <h2>Показания ПУ</h2>
                 <p class="reading"><span id="valueContainer">НЕТ ПОКАЗАНИЙ</span></p>
-                <p class="gray-label">Показания за: <span id="timestamp"></span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
+            </div>
+            <div class="card">
+                <h2>Показания ПУ</h2>
+                <p class="reading"><span id="value2Container">НЕТ ПОКАЗАНИЙ</span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
+            </div>
+            <div class="card">
+                <h2>Показания ПУ</h2>
+                <p class="reading"><span id="value3Container">НЕТ ПОКАЗАНИЙ</span></p>
+                <p class="gray-label">Показания за: <span id="timestamp1"></span></p>
             </div>
             <div class="card">
                 <h2>Реле ПУ </h2>
@@ -48,19 +59,24 @@
 </body>
 <script>
     // DOM Elements
+   // const companyIdentifier = document.getElementById('companyIdentifier');
+   const deviceNameInput = document.getElementById('deviceName');
     const scanButton = document.getElementById('scanBleButton');
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
+    const retrievedValue3 = document.getElementById('value3Container');
+    const retrievedValue2 = document.getElementById('value2Container');
     const retrievedValue1 = document.getElementById('value1Container');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
-
+    const timestampContainer1 = document.getElementById('timestamp1');
+     
     //Define BLE Device Specs
-    var deviceName ='StarBR16120000007';
+    var deviceName = 'StarBR36120000037';
     var bleService = '0000a002-0000-1000-8000-00805f9b34fb';
     var ledCharacteristic = '0000c302-0000-1000-8000-00805f9b34fb';
     var sensorCharacteristic= '0000c305-0000-1000-8000-00805f9b34fb';
@@ -69,7 +85,8 @@
     var bleServer;
     var bleServiceFound;
     var sensorCharacteristicFound;
-
+    // Input filter var condition
+    
     // Scan Button (search for BLE Devices only if BLE is available)
     scanButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
@@ -80,7 +97,8 @@
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', (event) => {
         if (isWebBluetoothEnabled()){
-            connectToDevice();
+           const deviceName = deviceNameInput.value;
+           connectToDevice();
         }
     });
 
@@ -106,7 +124,9 @@
    function onWatchAdvertisementsButtonClick() {  
        console.log('Requesting any Bluetooth device...');
     navigator.bluetooth.requestDevice({
-        acceptAllDevices: true
+        //acceptAllDevices: true
+         filters: [{name: deviceName}],
+         optionalServices: [bleService]
     })
     .then(device => {
         console.log('> Requested ' + device.name);
@@ -161,6 +181,15 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
   // Connect to BLE Device and Enable Notifications
     function connectToDevice(){
         console.log('Initializing Bluetooth...');
+       connectButton.addEventListener('click', () => {
+   // const deviceName = deviceNameInput.value;
+    if (deviceName) {
+       // filters = 'deviceName' ;
+        // console.log('filter...', filters );
+        // Далее продолжите вашу логику подключения к устройству с использованием фильтра `deviceName`
+    }
+});
+        // console.log('filter...', filters );
         navigator.bluetooth.requestDevice({
             filters: [{name: deviceName}],
             optionalServices: [bleService]
@@ -209,13 +238,41 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
 
         onWatchAdvertisementsButtonClick();
     }
+    function handleCharacteristicChange(event) {
+    const newValueReceived = new TextDecoder().decode(event.target.value);
+    console.log("Characteristic value changed: ", newValueReceived);
 
-    function handleCharacteristicChange(event){
-        const newValueReceived = new TextDecoder().decode(event.target.value);
-        console.log("Characteristic value changed: ", newValueReceived);
-        retrievedValue.innerHTML = newValueReceived;
+    // Разделение строки на массив переменных, используя разделитель ';' для начала
+    const parts = newValueReceived.split(';');
+
+    // Предполагается, что у нас может быть 8 значений, мы разбиваем каждый элемент массива по ','
+    const values = parts.map(part => part.split(',')).flat();
+
+    // Проверяем, что у нас есть хотя бы 8 значений
+    if (values.length >= 8) {
+        const [newValueReceived0, newValueReceived1, newValueReceived2,
+                newValueReceived3, newValueReceived4, newValueReceived5,
+                newValueReceived6, newValueReceived7] = values;
+
+        // Форматируем первые 3 переменные
+        const formattedValue0 = (parseFloat(newValueReceived0) / 10).toString().toLowerCase();
+        const formattedValue3 = (parseFloat(newValueReceived3) / 100).toString().toLowerCase();
+        const formattedValue6 = (parseFloat(newValueReceived6) / 1000).toString().toLowerCase();
+        const formattedValue7 = (parseFloat(newValueReceived7) / 10000).toString().toLowerCase();
+
+        // Выводим отформатированные значения в консоль
+        console.log("Formatted values:", formattedValue0, formattedValue3,  formattedValue6, formattedValue7);
+
+        // Обновляем HTML элементы с полученными значениями (если необходимо)
+        retrievedValue.innerHTML = `${formattedValue0} V`;
+        retrievedValue2.innerHTML = `${formattedValue3} A`;
+        retrievedValue3.innerHTML = `${formattedValue6} kW`;
+        retrievedValue1.innerHTML = `${formattedValue7} м`;
         timestampContainer.innerHTML = getDateTime();
+    } else {
+        console.warn("Not enough values received.");
     }
+}
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
@@ -310,7 +367,7 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         var minutes = ("00" + currentdate.getMinutes()).slice(-2);
         var seconds = ("00" + currentdate.getSeconds()).slice(-2);
         
-        var datetime = day + "/" + month + "/" + year + " at " + hours + ":" + minutes + ":" + seconds;
+        var datetime = day + "/" + month + "/" + year + " в " + hours + ":" + minutes + ":" + seconds;
         return datetime;
     }
 
